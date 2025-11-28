@@ -15,6 +15,6 @@ num_of_weeks = days / 7
 
 
 print(num_of_weeks)
-print(round(days/7, 2)) #3.29
+print(round(days/7, 2))  # 3.29
 
 

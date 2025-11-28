@@ -12,7 +12,8 @@
 - Print only the first 3 animals
 """
 zoo = ['tiger', 'lion', 'cat', 'dog', 'monkey']
-zoo.remove(3)
+zoo.pop(3)
 zoo.append('pinguin')
-print(zoo)
-print(zoo[0: ])
+zoo.pop(0)
+print(zoo)  # ['lion', 'cat', 'monkey', 'pinguin']
+print(zoo[0: 3])  # ['lion', 'cat', 'monkey']
