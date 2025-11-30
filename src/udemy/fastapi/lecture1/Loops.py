@@ -24,3 +24,21 @@ index = 0
 while index <= 5:
     print(index)
     index +=1
+else:
+    print("out of the while")
+
+"""
+break
+"""
+
+index = 0
+while index < 100:
+    index +=1
+    if index == 3:
+        continue
+    if index == 5:
+        break
+    print(index)
+# 1
+# 2
+# 4
