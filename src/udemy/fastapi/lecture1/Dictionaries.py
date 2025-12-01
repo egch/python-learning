@@ -29,4 +29,8 @@ user_dictionary = {
 }
 for key, value in user_dictionary.items():
     print(key, value)
+# with copy() we preserve the value of user_dictionary
+user_dictionary2 = user_dictionary.copy()
+user_dictionary2.pop("age")
+print(user_dictionary)
 
