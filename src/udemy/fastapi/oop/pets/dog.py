@@ -2,7 +2,7 @@ from src.udemy.fastapi.oop.pets.animal import Animal
 
 
 class Dog(Animal):
-    #All aninal attributes
+    #All animal attributes
     can_sched: bool
     domestic_name: str
 
