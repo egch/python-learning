@@ -1,4 +1,5 @@
 from src.udemy.fastapi.oop.enemy.enemy import Enemy
+import random
 
 
 class Zombie(Enemy):
@@ -14,4 +15,11 @@ class Zombie(Enemy):
     # this method only belongs to the Zombie class, not to its parent class
     def spread_disease(self ):
         print('The zombie is trying to spread infection')
+
+    def special_attack(self):
+        dis_special_attack_work = random.random() < 0.5
+        if dis_special_attack_work:
+            self.health_points +=2
+            print('Zombie regenerated 2HP!')
+
 

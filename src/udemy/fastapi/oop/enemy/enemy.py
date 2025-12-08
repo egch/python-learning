@@ -24,7 +24,10 @@ class Enemy:
 
 
     def attack(self):
-        print(f"{self.get_type_of_enemy()} attack")
+        print(f"{self.get_type_of_enemy()} attacks for {self.attack_damage} damage")
+
+    def special_attack(self):
+        print("Enemy has no special attack")
 
 
     def __init__(self, type_of_enemy, health_points=10, attack_damage=1):

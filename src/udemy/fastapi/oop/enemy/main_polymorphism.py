@@ -13,3 +13,7 @@ ogre = Ogre(20, 3)
 battle(zombie)
 battle(ogre)
 
+# *Grumbling ...
+# Zombie attack
+# Ogre is slamming hands all around
+# Ogre attack
