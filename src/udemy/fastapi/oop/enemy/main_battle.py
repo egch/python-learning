@@ -17,7 +17,7 @@ def battle(e1: Enemy, e2: Enemy):
         e1.attack()
         e2.health_points -= e1.attack_damage
     print('____')
-    if(e1.health_points > e2.health_points):
+    if e1.health_points > e2.health_points:
         print(f'{e1.get_type_of_enemy()} wins')
     elif e1.health_points < e2.health_points:
         print(f'{e2.get_type_of_enemy()} wins')
