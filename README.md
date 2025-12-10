@@ -22,9 +22,21 @@ Activate
 ```shell
  source bin/activate
 ```
+
+list
+```shell
+pip list
+```
+
+install fastapi
+```shell
+pip install fastapi
+```
 ## Resources
 
 
 [Source](src/udemy/fastapi)
 
 [course](https://www.udemy.com/course/fastapi-the-complete-course/)
+
+[github project](https://github.com/codingwithroby/FastAPI-The-Complete-Course)
