@@ -1,11 +1,11 @@
 # Learning Python
 My personal playground for learning Python.
 
-## FastAPI Udemy
-### What is a Python virtual environment
+
+## What is a Python virtual environment
 A virtual environment is a private folder that contains its own Python interpreter and its own installed packages.
 
-### PIP
+## Commands (mac)
 Python Package Manager.   
 pip installs external Python libraries into your environment (global or virtual environment).
 
@@ -23,6 +23,11 @@ Activate
  source bin/activate
 ```
 
+deactivate
+```shell
+deactivate
+```
+
 list
 ```shell
 pip list
@@ -30,7 +35,12 @@ pip list
 
 install fastapi
 ```shell
-pip install fastapi
+pip install fastapi uvicorn
+```
+
+### fastapi commands
+```shell
+uvicorn src.udemy.fastapi.fastapi.books:app --reload
 ```
 ## Resources
 
