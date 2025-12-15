@@ -38,10 +38,18 @@ install fastapi
 pip install fastapi uvicorn
 ```
 
+install fastapi [standard]
+```shell
+ pip install "fastapi[standard]"
+```
+
 ### fastapi commands
 ```shell
 uvicorn src.udemy.fastapi.fastapi.books:app --reload
 ```
+
+### Swagger
+http://127.0.0.1:8000/docs
 ## Resources
 
 
