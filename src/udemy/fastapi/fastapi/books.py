@@ -43,4 +43,22 @@ async def read_all_books(dynamic_param: int):
 ######### Query Parameters ##############
 #########################################
 
+@app.get("/books/")
+async def react_category_by_query(category: str):
+    books_to_return = []
+    for book in BOOKS:
+        if book.get("category").casefold() == category.casefold():
+            books_to_return.append(book)
+    return books_to_return
+
+# path parameter & query parameter combined
+@app.get("/books/author/{author}")
+async def read_author_category_by_query(book_author: str, category: str):
+    books_to_return = []
+    for book in BOOKS:
+        if book.get("category").casefold() == category.casefold() and \
+            book.get("author").casefold() == book_author.casefold():
+                books_to_return.append(book)
+    return books_to_return
+
 
