@@ -51,11 +51,16 @@ uvicorn src.udemy.fastapi.fastapi.books:app --reload
 ### Swagger
 http://127.0.0.1:8000/docs
 
-## Queries
+
+### Queries
 ```shell
 curl "http://127.0.0.1:8000/books/?category=science"
 ```
-
+## Other HTTP Verbs
+### PUT
+```json
+    {"title": "Title Two", "author": "Author XXX", "category": "XXX"}
+```
 ## Resources
 
 

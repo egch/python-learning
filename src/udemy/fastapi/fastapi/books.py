@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
+
 
 app = FastAPI()
 
@@ -62,3 +63,22 @@ async def read_author_category_by_query(book_author: str, category: str):
     return books_to_return
 
 
+#########################################
+#########     POST HTTP    ##############
+#########################################
+
+@app.post("/books/create_book")
+async def create_book(new_book=Body()):
+    BOOKS.append(new_book)
+
+#########################################
+#########     PUT HTTP    ###############
+#########################################
+
+# This is a wrong way to run a PUT (update). We should go restful having an id to uniquely identify the element
+# of the collection to be updated
+@app.put("/books/update_book")
+async def update_book(update_book=Body()):
+    for index in range(len(BOOKS)):
+        if BOOKS[index].get('title').casefold() == update_book.get('title').casefold():
+            BOOKS[index].update(update_book)
