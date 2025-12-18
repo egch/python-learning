@@ -82,3 +82,16 @@ async def update_book(update_book=Body()):
     for index in range(len(BOOKS)):
         if BOOKS[index].get('title').casefold() == update_book.get('title').casefold():
             BOOKS[index].update(update_book)
+
+
+#########################################
+#########     DELETE HTTP    ############
+#########################################
+@app.delete("/books/")
+async def delete_book(book_tile: str):
+    for index in range(len(BOOKS)):
+        if BOOKS[index].get("title").casefold() == book_tile.casefold():
+            BOOKS.pop(index)
+            break
+
+
