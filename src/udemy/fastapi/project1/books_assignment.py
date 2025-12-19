@@ -15,18 +15,14 @@ BOOKS =[
     {'title': 'Title Four', 'author': 'Author Four', 'category': 'math'},
     {'title': 'Title Five', 'author': 'Author Five', 'category': 'math'},
     {'title': 'Title Six', 'author': 'Author Two', 'category': 'math'}
-
 ]
-
-
-
 
 @app.get("/books")
 async def read_all_books():
     return  BOOKS
 
 
-@app.get("/books/author/{author}")
+@app.get("/books/byauthor/{author}")
 async def read_book(book_author: str):
     books_to_return = []
     for book in BOOKS:

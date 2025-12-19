@@ -35,7 +35,7 @@ pip list
 
 install fastapi
 ```shell
-pip install fastapi uvicorn
+pip install project1 uvicorn
 ```
 
 install fastapi [standard]
@@ -45,7 +45,7 @@ install fastapi [standard]
 
 ### fastapi commands
 ```shell
-uvicorn src.udemy.fastapi.fastapi.books:app --reload
+uvicorn src.udemy.fastapi.project1.books:app --reload
 ```
 
 ### Swagger
