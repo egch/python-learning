@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Body
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -16,6 +17,13 @@ class Book:
         self.author = author
         self.description = description
         self.rating = rating
+class BookRequest(BaseModel):
+    id: int
+    title: str
+    author: str
+    description: str
+    rating: int
+
 
 
 BOOKS = [
@@ -36,10 +44,17 @@ BOOKS = [
 
     Book(6, "Java in Practice", "Enrico Giurin",
          "Practical examples and best practices for modern Java development", 5),
-
 ]
 
 
 @app.get("/books")
 async def read_all_books():
     return BOOKS
+
+@app.post("/books/create_book")
+async def create_book(book_request: BookRequest):
+    # converting the request to Book object
+    new_book = Book(**book_request.dict())
+    BOOKS.append(new_book)
+
+

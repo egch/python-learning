@@ -61,6 +61,17 @@ curl "http://127.0.0.1:8000/books/?category=science"
 ```json
     {"title": "Title Two", "author": "Author XXX", "category": "XXX"}
 ```
+
+## Pydantic
+```pycon
+@app.post("/books/create_book")
+async def create_book(book_request: BookRequest):
+    # converting the request to Book object
+    new_book = Book(**book_request.dict())
+    BOOKS.append(new_book)
+
+```
+
 ## Resources
 
 
