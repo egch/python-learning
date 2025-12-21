@@ -1,5 +1,8 @@
-from fastapi import FastAPI, Body
-from pydantic import BaseModel
+from selectors import SelectSelector
+from typing import Optional
+
+from fastapi import FastAPI
+from pydantic import BaseModel, Field
 
 app = FastAPI()
 
@@ -17,12 +20,15 @@ class Book:
         self.author = author
         self.description = description
         self.rating = rating
+
+
+# adding some validation
 class BookRequest(BaseModel):
-    id: int
-    title: str
-    author: str
-    description: str
-    rating: int
+    id: Optional[int] = None
+    title: str = Field(min_length=3)
+    author: str = Field(min_length=3)
+    description: str = Field(min_length=1, max_length=100)
+    rating: int = Field(gt=-1, lt=60)
 
 
 
@@ -51,10 +57,15 @@ BOOKS = [
 async def read_all_books():
     return BOOKS
 
-@app.post("/books/create_book")
+@app.post("/create_book")
 async def create_book(book_request: BookRequest):
     # converting the request to Book object
     new_book = Book(**book_request.dict())
-    BOOKS.append(new_book)
+    BOOKS.append(find_book_id(new_book))
 
+#we want to increase the id
+# BOOKS[-1] -> return the last element of the collection
+def find_book_id(book: Book):
+    book.id = 1 if len(BOOKS) == 0 else BOOKS[-1].id+1
+    return book
 

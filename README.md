@@ -63,13 +63,26 @@ curl "http://127.0.0.1:8000/books/?category=science"
 ```
 
 ## Pydantic
-```pycon
+```python
 @app.post("/books/create_book")
 async def create_book(book_request: BookRequest):
     # converting the request to Book object
     new_book = Book(**book_request.dict())
     BOOKS.append(new_book)
 
+```
+### Validation
+```python
+class BookRequest(BaseModel):
+    id: int
+    title: str = Field(min_length=3)
+    author: str = Field(min_length=3)
+    description: str = Field(min_length=1, max_length=100)
+    rating: int = Field(gt=-1, lt=60)
+```
+### Returning last element of a collection
+```python
+BOOKS[-1] 
 ```
 
 ## Resources
