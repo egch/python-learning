@@ -85,6 +85,31 @@ class BookRequest(BaseModel):
 BOOKS[-1] 
 ```
 
+### model_config / json_schema_extra
+What json_schema_extra actually does
+
+❌ does NOT change validation
+
+✅ affects OpenAPI / Swagger docs
+
+✅ useful for examples, descriptions, UI hints
+
+```json
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "title": "Clean Code",
+                "author": "Robert C. Martin",
+                "description": "A book about writing clean, maintainable code",
+                "rating": 10
+            }
+        }
+```
+
+![img.png](docs/images/json_schema_extra.png)
+
+
+
 ## Resources
 
 

@@ -24,12 +24,22 @@ class Book:
 
 # adding some validation
 class BookRequest(BaseModel):
-    id: Optional[int] = None
+    id: Optional[int] = Field(description='ID is not needed on create', default=None)
     title: str = Field(min_length=3)
     author: str = Field(min_length=3)
     description: str = Field(min_length=1, max_length=100)
     rating: int = Field(gt=-1, lt=60)
 
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "title": "Clean Code",
+                "author": "Robert C. Martin",
+                "description": "A book about writing clean, maintainable code",
+                "rating": 10
+            }
+        }
+    }
 
 
 BOOKS = [
@@ -57,15 +67,28 @@ BOOKS = [
 async def read_all_books():
     return BOOKS
 
+
+@app.get("/books/{book_id}")
+async def read_book(book_id: int):
+    for book in BOOKS:
+        if book.id == book_id:
+            return book
+
+# TO BE COMPLETED
+@app.get("/books/")
+async def read_book_by_rating(book_rating: int):
+    books_to_return = []
+
+
 @app.post("/create_book")
 async def create_book(book_request: BookRequest):
     # converting the request to Book object
     new_book = Book(**book_request.dict())
     BOOKS.append(find_book_id(new_book))
 
-#we want to increase the id
+
+# we want to increase the id
 # BOOKS[-1] -> return the last element of the collection
 def find_book_id(book: Book):
-    book.id = 1 if len(BOOKS) == 0 else BOOKS[-1].id+1
+    book.id = 1 if len(BOOKS) == 0 else BOOKS[-1].id + 1
     return book
-
