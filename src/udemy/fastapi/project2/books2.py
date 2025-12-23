@@ -78,7 +78,7 @@ def find_book_id(book: Book):
 async def read_all_books():
     return BOOKS
 
-# parameters validation
+# Path validation
 @app.get("/books/{book_id}")
 async def read_book(book_id: int = Path(gt=0)):
     for book in BOOKS:
@@ -119,6 +119,8 @@ async def update_book(book: BookRequest):
         if BOOKS[index].id == book.id:
             BOOKS[index] = book
 
+
+# Path validation
 @app.delete("/books/{book_id}")
 async def delete_book(book_id: int=Path(gt=0)):
     for index in range(len(BOOKS)):
