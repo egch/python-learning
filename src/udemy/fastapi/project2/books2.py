@@ -13,13 +13,16 @@ class Book:
     author: str
     description: str
     rating: int
+    published_date: int
 
-    def __init__(self, id, title, author, description, rating):
+    def __init__(self, id, title, author, description, rating, published_date):
         self.id = id
         self.title = title
         self.author = author
         self.description = description
         self.rating = rating
+        self.published_date = published_date
+
 
 
 # adding some validation
@@ -29,6 +32,7 @@ class BookRequest(BaseModel):
     author: str = Field(min_length=3)
     description: str = Field(min_length=1, max_length=100)
     rating: int = Field(gt=-1, lt=60)
+    published_date: int = Field(gt=1998, lt=2031)
 
     model_config = {
         "json_schema_extra": {
@@ -36,7 +40,8 @@ class BookRequest(BaseModel):
                 "title": "Clean Code",
                 "author": "Robert C. Martin",
                 "description": "A book about writing clean, maintainable code",
-                "rating": 10
+                "rating": 10,
+                "published_date": 2024
             }
         }
     }
@@ -44,22 +49,22 @@ class BookRequest(BaseModel):
 
 BOOKS = [
     Book(1, "Computer Science", "Enrico Giurin",
-         "A concise introduction to core computer science concepts", 5),
+         "A concise introduction to core computer science concepts", 5, 2010),
 
     Book(2, "Vocabulary", "Enrico Giurin",
-         "An overview of the tech stack behind the Vocabulary app", 4),
+         "An overview of the tech stack behind the Vocabulary app", 4, 2020),
 
     Book(3, "The Pragmatic Programmer", "Andrew Hunt & David Thomas",
-         "Practical advice for modern software development", 4),
+         "Practical advice for modern software development", 4, 2018),
 
     Book(4, "Design Patterns", "Erich Gamma et al.",
-         "Elements of reusable object-oriented software", 4),
+         "Elements of reusable object-oriented software", 4, 2005),
 
     Book(5, "Refactoring", "Martin Fowler",
-         "Improving the design of existing code", 4),
+         "Improving the design of existing code", 4, 1999),
 
     Book(6, "Java in Practice", "Enrico Giurin",
-         "Practical examples and best practices for modern Java development", 5),
+         "Practical examples and best practices for modern Java development", 5, 2021),
 ]
 
 
@@ -86,6 +91,14 @@ async def read_book_by_rating(book_rating: int):
     books_to_return = []
     for book in BOOKS:
         if book.rating == book_rating:
+            books_to_return.append(book)
+    return books_to_return
+
+@app.get("/books/publish/")
+async def read_book_by_published_date(published_date: int):
+    books_to_return = []
+    for book in BOOKS:
+        if book.published_date == published_date:
             books_to_return.append(book)
     return books_to_return
 
