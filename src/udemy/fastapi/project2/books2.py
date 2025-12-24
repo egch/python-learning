@@ -1,4 +1,5 @@
-from selectors import SelectSelector
+from fastapi import HTTPException
+
 from typing import Optional
 
 from fastapi import FastAPI, Path, Query
@@ -84,18 +85,22 @@ async def read_book(book_id: int = Path(gt=0)):
     for book in BOOKS:
         if book.id == book_id:
             return book
+    #we throw 404 if there ain't that book
+    raise HTTPException(status_code=404, detail='Item not found')
 
-# TO BE COMPLETED
+
+# Query parameter validation
 @app.get("/books/")
-async def read_book_by_rating(book_rating: int):
+async def read_book_by_rating(book_rating: int = Query(gt=0, lt=6)):
     books_to_return = []
     for book in BOOKS:
         if book.rating == book_rating:
             books_to_return.append(book)
     return books_to_return
 
+# Query parameter validation
 @app.get("/books/publish/")
-async def read_book_by_published_date(published_date: int):
+async def read_book_by_published_date(published_date: int = Query(gt=1998, lt=2030)):
     books_to_return = []
     for book in BOOKS:
         if book.published_date == published_date:
@@ -118,6 +123,10 @@ async def update_book(book: BookRequest):
     for index in range(len(BOOKS)):
         if BOOKS[index].id == book.id:
             BOOKS[index] = book
+            return
+    raise HTTPException(status_code=404, detail='Item not found')
+
+
 
 
 # Path validation

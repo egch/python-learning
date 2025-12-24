@@ -108,7 +108,14 @@ What json_schema_extra actually does
 
 ![img.png](docs/images/json_schema_extra.png)
 
+## Http Exceptions
 
+```pycon
+from fastapi import HTTPException
+
+
+ raise HTTPException(status_code=404, detail='Item not found')
+```
 
 ## Resources
 
