@@ -6,3 +6,4 @@ __pycache__/
 *.pyc
 /fastapi/
 /fastapi-env/
+/src/udemy/fastapi/project3/todoapp/todos.db
