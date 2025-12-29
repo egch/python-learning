@@ -29,10 +29,25 @@ Check the existing schema:
 ```shell
 sqllite> .schema
 ```
-
+### SQL examples
 Insert the first row
-```shell
+```sql
 insert into todos (title, description, priority, complete) values ('Go to the store', 'Pick up eggs', 5, False);
+```
+
+```sql
+select * from todos;
+```
+
+```sql
+delete from todos where id = 2
+```
+
+### View Modes
+```shell
+.mode column # show the column names
+.mode markdown 
+
 ```
 
 
