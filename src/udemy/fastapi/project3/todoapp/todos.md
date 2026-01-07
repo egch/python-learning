@@ -8,3 +8,7 @@ pip install passlib
 pip install bcrypt==4.0.1
 pip install python-multipart
 ```
+## sqllite
+```shell
+ sqlite3 todosapp.db
+```
