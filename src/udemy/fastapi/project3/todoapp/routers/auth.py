@@ -1,4 +1,6 @@
 
+from datetime import datetime, timedelta, timezone
+
 from fastapi import APIRouter, Depends
 
 from pydantic import BaseModel
@@ -11,8 +13,12 @@ from database import SessionLocal
 from models import Users
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordRequestForm
+from jose import jwt
 
 router = APIRouter()
+
+SECRET_KEY = '4c3a5316958c22152353c1860ed0c04bb741a5f78182998551d4e0264c8476e5'
+ALGORITHM = 'HS256'
 
 bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
@@ -41,7 +47,14 @@ def authenticate_user(username: str, password: str, db):
         return False
     if not bcrypt_context.verify(password, user.hashed_password):
         return False
-    return True
+    return user
+
+def create_access_token(username: str, user_id: int, expires_delta: timedelta):
+    encode = {'sub': username, 'id': user_id}
+    expires = datetime.now(timezone.utc) + expires_delta
+    encode.update({'exp': expires})
+    return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)
+
 
 
 
@@ -66,4 +79,6 @@ async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm,
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
         return 'Failed authentication'
-    return 'Successful authentication'
+
+    token = create_access_token(user.username, user.id, timedelta(minutes=25))
+    return  token
