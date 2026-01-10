@@ -26,7 +26,7 @@ SECRET_KEY = '4c3a5316958c22152353c1860ed0c04bb741a5f78182998551d4e0264c8476e5'
 ALGORITHM = 'HS256'
 
 bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
-oauth2_bearer = OAuth2PasswordBearer(tokenUrl='token')
+oauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token')
 
 class CreateUserRequest(BaseModel):
     email: str
@@ -81,11 +81,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
                             detail='Could not validate user.')
 
 
-
-
-
-
-@router.post("/auth/", status_code=status.HTTP_201_CREATED)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_user(db: db_dependency,
                       create_user_request: CreateUserRequest):
     create_user_model = Users(
