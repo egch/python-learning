@@ -19,5 +19,11 @@ openssl rand -hex 32
  sqlite3 todosapp.db
 ```
 
+## Authentication
+
+User `aaa/bbb` previously added in the db.
+
+![from swagger](docs/authentication.png)
+
 ## Links
 [jwt io](http://www.jwt.io)
