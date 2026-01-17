@@ -87,7 +87,7 @@ async def update_todo(user: user_dependency,
 async def delete_todo(user: user_dependency,
                       db: db_dependency,
                       todo_id: int=Path(gt=0)):
-    if user is None:
+  if user is None or user.get('user_role') != 'admin':
         raise HTTPException(status_code=401, detail='Authentication Failed')
 
     todo_model = (db.query(Todos).filter(Todos.id == todo_id)
