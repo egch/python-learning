@@ -2,12 +2,30 @@
 You need to have a pycharm project starting from this folder!
 
 ## Commands
+
+Create the venv env
 ```shell
 python -m pip install --upgrade pip
+p3 -m venv fastapienv 
+```
+
+Activate
+```shell
+source fastapienv/bin/activate
+```
+Install the dependencies
+```shell
+pip install "fastapi[standard]"
 pip install passlib
 pip install bcrypt==4.0.1
 pip install python-multipart
 pip install "python-jose[cryptography]"
+pip install sqlalchemy
+```
+
+### fastapi commands
+```shell
+uvicorn src.main:app --reload
 ```
 
 ### Generate random secret
@@ -15,6 +33,7 @@ pip install "python-jose[cryptography]"
 openssl rand -hex 32
 ```
 ## sqllite
+
 ```shell
  sqlite3 todosapp.db
 ```

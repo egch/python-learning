@@ -35,7 +35,7 @@ pip list
 
 install fastapi
 ```shell
-pip install project1 uvicorn
+pip install uvicorn
 ```
 
 install fastapi [standard]
