@@ -5,7 +5,7 @@ You need to have a pycharm project starting from this folder!
 
 Create the venv env
 ```shell
-python -m pip install --upgrade pip
+p3 -m pip install --upgrade pip
 p3 -m venv fastapienv 
 ```
 
