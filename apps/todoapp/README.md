@@ -46,3 +46,6 @@ User `aaa/bbb` previously added in the db.
 
 ## Links
 [jwt io](http://www.jwt.io)
+
+### Change Password
+Use this so you remember it: `12345!`
