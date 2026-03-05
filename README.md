@@ -117,6 +117,36 @@ from fastapi import HTTPException
  raise HTTPException(status_code=404, detail='Item not found')
 ```
 
+## Database
+
+PostgreSQL runs via Docker Compose. The compose file and data volume are in the `docker-compose/` folder.
+
+### Start Postgres
+```shell
+cd docker-compose
+docker compose up -d
+```
+
+### Stop Postgres
+```shell
+cd docker-compose
+docker compose down
+```
+
+### Connection details
+| Field    | Value      |
+|----------|------------|
+| Host     | localhost  |
+| Port     | 5432       |
+| Database | todosapp   |
+| User     | admin      |
+| Password | password   |
+
+**Connection URL:**
+```
+postgresql://admin:password@localhost:5432/todosapp
+```
+
 ## Resources
 
 
