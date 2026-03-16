@@ -147,6 +147,35 @@ docker compose down
 postgresql://admin:password@localhost:5432/todosapp
 ```
 
+### Cleanup Docker Volume when Changing PostgreSQL Initialization
+
+When using the official PostgreSQL Docker image, the environment variables
+
+- `POSTGRES_USER`
+- `POSTGRES_PASSWORD`
+- `POSTGRES_DB`
+
+are applied **only the first time the database is initialized**.
+
+If the database data directory already exists (for example because of a mounted volume like `./data:/var/lib/postgresql/data`), PostgreSQL **will ignore any changes to these variables**.
+
+Therefore, if you modify the initialization configuration, you must remove the existing volume or data directory.
+
+**Example (bind mount):**
+
+rm -rf data  
+docker compose up
+
+**Example (Docker volume):**
+
+docker compose down -v  
+docker compose up
+
+This forces PostgreSQL to initialize a **fresh database cluster with the new configuration**.
+
+### PgAdmin
+![pgAdmin.png](docs/images/pgAdmin.png)
+
 ## Resources
 
 
