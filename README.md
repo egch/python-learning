@@ -134,17 +134,17 @@ docker compose down
 ```
 
 ### Connection details
-| Field    | Value      |
-|----------|------------|
-| Host     | localhost  |
-| Port     | 5432       |
-| Database | todosapp   |
-| User     | admin      |
-| Password | password   |
+| Field    | Value     |
+|----------|-----------|
+| Host     | localhost |
+| Port     | 5432      |
+| Database | todosapp  |
+| User     | postgres  |
+| Password | p123      |
 
 **Connection URL:**
 ```
-postgresql://admin:password@localhost:5432/todosapp
+postgresql://postgres:p123@localhost:5432/todosapp
 ```
 
 ### Cleanup Docker Volume when Changing PostgreSQL Initialization
