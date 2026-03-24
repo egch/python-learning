@@ -5,28 +5,49 @@ My personal playground for learning Python.
 ## What is a Python virtual environment
 A virtual environment is a private folder that contains its own Python interpreter and its own installed packages.
 
-## Commands (mac)
+## Commands 
 Python Package Manager.   
 pip installs external Python libraries into your environment (global or virtual environment).
 
+### Mac 
 ```shell
 p3 -m pip --version
 ```
 
-Create the venv env
+Create the .venv env
 ```shell
-p3 -m venv fastapienv 
+p3 -m venv .venv 
 ```
 
 Activate
 ```shell
- source bin/activate
+ source .venv/bin/activate
 ```
 
 deactivate
 ```shell
 deactivate
 ```
+### Windows 
+```shell
+python3 -m pip --version
+```
+
+Create the .venv env
+```shell
+python3 -m venv .venv 
+```
+
+Activate
+```shell
+.venv\Scripts\Activate.ps1
+```
+
+deactivate
+```shell
+deactivate
+```
+### Commons 
 
 list
 ```shell

@@ -10,3 +10,5 @@ __pycache__/
 /apps/todoapp/todosapp.db
 /apps/todoapp/fastapienv/
 /docker-compose/data/
+/fastapienv/
+/.venv/
