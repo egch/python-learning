@@ -21,6 +21,7 @@ pip install bcrypt==4.0.1
 pip install python-multipart
 pip install "python-jose[cryptography]"
 pip install sqlalchemy
+pip install psycopg2-binary
 ```
 
 ### fastapi commands
