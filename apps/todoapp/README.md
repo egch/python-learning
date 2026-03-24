@@ -41,10 +41,70 @@ openssl rand -hex 32
 
 ## Authentication
 
-User `aaa/bbb` previously added in the db.
+User `a/a` previously added in the db.
 
 ![from swagger](docs/authentication.png)
 
+
+
+## Database
+
+PostgreSQL runs via Docker Compose. The compose file and data volume are in the `docker-compose/` folder.
+
+### Start Postgres
+```shell
+cd docker-compose
+docker compose up -d
+```
+
+### Stop Postgres
+```shell
+cd docker-compose
+docker compose down
+```
+
+### Connection details
+| Field    | Value     |
+|----------|-----------|
+| Host     | localhost |
+| Port     | 5432      |
+| Database | todosapp  |
+| User     | postgres  |
+| Password | p123      |
+
+**Connection URL:**
+```
+postgresql://postgres:p123@localhost:5432/todosapp
+```
+
+### Cleanup Docker Volume when Changing PostgreSQL Initialization
+
+When using the official PostgreSQL Docker image, the environment variables
+
+- `POSTGRES_USER`
+- `POSTGRES_PASSWORD`
+- `POSTGRES_DB`
+
+are applied **only the first time the database is initialized**.
+
+If the database data directory already exists (for example because of a mounted volume like `./data:/var/lib/postgresql/data`), PostgreSQL **will ignore any changes to these variables**.
+
+Therefore, if you modify the initialization configuration, you must remove the existing volume or data directory.
+
+**Example (bind mount):**
+
+rm -rf data  
+docker compose up
+
+**Example (Docker volume):**
+
+docker compose down -v  
+docker compose up
+
+This forces PostgreSQL to initialize a **fresh database cluster with the new configuration**.
+
+### PgAdmin
+![pgAdmin.png](docs/images/pgAdmin.png)
 ## Links
 [jwt io](http://www.jwt.io)
 
