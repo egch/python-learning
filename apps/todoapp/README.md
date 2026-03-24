@@ -104,7 +104,7 @@ docker compose up
 This forces PostgreSQL to initialize a **fresh database cluster with the new configuration**.
 
 ### PgAdmin
-![pgAdmin.png](docs/images/pgAdmin.png)
+![pgAdmin.png](docs/pgAdmin.png)
 ## Links
 [jwt io](http://www.jwt.io)
 
