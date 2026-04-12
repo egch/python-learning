@@ -157,3 +157,13 @@ def downgrade() -> None:
     """Downgrade schema."""
     pass
 ```
+
+Running upgrade. Revision ID is defined in the revision file under the [versions](alembic/versions) folder.
+```shell
+alembic upgrade <Revision-ID>
+```
+
+Running downgrade.
+```shell
+alembic downgrade -1
+```
