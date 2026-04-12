@@ -1,0 +1,30 @@
+fastapi[standard]
+passlib
+bcrypt==4.0.1
+python-multipart
+python-jose[cryptography]
+sqlalchemy
+psycopg2-binary
+alembic
+
+# How to Run
+#
+# 1. Create and activate a virtual environment:
+#    python3 -m pip install --upgrade pip
+#    python3 -m venv fastapienv
+#    source fastapienv/bin/activate
+#
+# 2. Install dependencies:
+#    pip install -r requirements.txt
+#
+# 3. Start PostgreSQL via Docker Compose:
+#    cd docker-compose
+#    docker compose up -d
+#
+# 4. Run the app:
+#    uvicorn src.main:app --reload
+#
+# The API will be available at http://127.0.0.1:8000
+# Interactive docs (Swagger UI) at http://127.0.0.1:8000/docs
+#
+# Default credentials: a / a
