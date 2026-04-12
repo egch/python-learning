@@ -132,8 +132,28 @@ Use this so you remember it: `12345!`
 alembic init alembic
 ```
 
-Change the sql alchemy url in the `alembic.ini` file:
+Change the sql alchemy url in the [alembic.ini](alembic.ini) file:
 ```properties
 sqlalchemy.url = 'postgresql://postgres:<pwd>@localhost/TodoApplicationDatabase'
 ```
 
+Import your models and change some setting in [env.py](alembic/env.py).
+
+> **Note:**  Since models live under `src/`, use `from src import models` in `env.py` (not `import models`), and keep `prepend_sys_path = .` in `alembic.ini` so that `src` is resolvable as a package from the project root.
+
+### Create revision
+```shell
+alembic revision -m "Create phone number for user column"
+```
+Once the revision is created under the [versions](alembic/versions) folder we need to implement
+these two methods:
+```python
+def upgrade() -> None:
+    """Upgrade schema."""
+    pass
+  
+
+def downgrade() -> None:
+    """Downgrade schema."""
+    pass
+```
