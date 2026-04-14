@@ -167,3 +167,8 @@ Running downgrade.
 ```shell
 alembic downgrade -1
 ```
+
+## pytest
+```shell
+pytest
+```
