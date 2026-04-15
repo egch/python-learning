@@ -2,16 +2,14 @@
 from typing import Annotated
 
 from fastapi import APIRouter
-from fastapi import HTTPException
-
 from fastapi import Depends
-
+from fastapi import HTTPException
+from fastapi import status
 from sqlalchemy.orm import Session
-from starlette import status
 
-from src.database import SessionLocal
-from src.models import Todos
-from .auth import  get_current_user
+from .auth import get_current_user
+from ..database import SessionLocal
+from ..models import Todos
 
 router = APIRouter()
 
