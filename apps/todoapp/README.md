@@ -172,3 +172,8 @@ alembic downgrade -1
 ```shell
 pytest
 ```
+
+Disabling warnings
+```shell
+pytest --disable-warnings
+```
