@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
 from .import models
@@ -5,8 +7,12 @@ from .database import engine
 from .routers import auth, todos, admin, users
 
 app = FastAPI()
-models.Base.metadata.create_all(bind=engine)
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    models.Base.metadata.create_all(bind=engine)
+    yield
 
 @app.get("/healthy")
 def health_check():

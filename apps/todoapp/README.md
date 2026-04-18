@@ -168,6 +168,14 @@ Running downgrade.
 alembic downgrade -1
 ```
 
+## Testing
+
+### Why `lifespan` instead of top-level `create_all`
+
+`models.Base.metadata.create_all(bind=engine)` at the top level of `main.py` runs at **import time**.
+This means the moment a test imports `app`, it tries to connect to PostgreSQL — even if the test uses SQLite.
+Moving it into the `lifespan` function ensures it only runs when the app actually starts, so tests can override the DB before any connection is made.
+
 ## pytest
 ```shell
 pytest
