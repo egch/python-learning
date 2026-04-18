@@ -79,3 +79,21 @@ def test_read_all_authenticated(test_todo):
       "owner_id": 1,
       "id": 1
   }]
+
+
+def test_read_one_authenticated(test_todo):
+    responses = client.get("/todo/1")
+    assert responses.status_code == status.HTTP_200_OK
+    assert responses.json() == {
+      "title": "Learning to code",
+      "description": "Need to learn every day",
+      "priority": 5,
+      "complete": False,
+      "owner_id": 1,
+      "id": 1
+  }
+
+def test_read_one_authenticated_not_found(test_todo):
+    responses = client.get("/todo/3")
+    assert responses.status_code == status.HTTP_404_NOT_FOUND
+    assert responses.json() == {"detail": "Item not found"}
