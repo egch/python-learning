@@ -1,6 +1,6 @@
 from fastapi import status
-from src.routers.todos   import get_db, get_current_user
 
+from src.routers.todos import get_db, get_current_user
 from .utils import *
 
 app.dependency_overrides[get_db] = override_get_db
