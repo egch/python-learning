@@ -3,9 +3,10 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, StaticPool, text
 from sqlalchemy.orm import sessionmaker
 
+from src.routers.auth import bcrypt_context
 from src.database import Base
 from src.main import app
-from src.models import Todos
+from src.models import Todos, Users
 
 SQLALCHEMY_DATABASE_URL = 'sqlite:///./testdb.db'
 
@@ -30,6 +31,7 @@ def override_get_db():
 def override_get_current_user():
     return {'username': 'enrico', 'id': 1, 'user_role': 'admin'}
 
+
 client = TestClient(app)
 
 
@@ -50,4 +52,27 @@ def test_todo():
     # --- TEARDOWN (runs after the test) ---
     with engine.connect() as connection:
         connection.execute(text("DELETE FROM todos;"))  # cleans up the DB
+        connection.commit()
+
+
+@pytest.fixture()
+def test_user():
+    # --- SETUP (runs before the test) ---
+    user = Users(
+        email="test@test.com",
+        username="testuser",
+        first_name="John",
+        last_name="Doe",
+        hashed_password=bcrypt_context.hash("testpassword"),
+        is_active=True,
+        role="admin",
+        phone_number="1234567890"
+    )
+    db = TestingSessionLocal()
+    db.add(user)
+    db.commit()
+    yield user  # <-- hands the todo to the test, pauses here
+    # --- TEARDOWN (runs after the test) ---
+    with engine.connect() as connection:
+        connection.execute(text("DELETE FROM users;"))  # cleans up the DB
         connection.commit()

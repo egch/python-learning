@@ -185,3 +185,8 @@ Disabling warnings
 ```shell
 pytest --disable-warnings
 ```
+
+ To see prints, run with the `-s `flag: 
+ ```shell
+pytest -s
+```
