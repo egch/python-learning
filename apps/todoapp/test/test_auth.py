@@ -1,9 +1,11 @@
 from calendar import isleap
+from uu import encode
 
 from .utils import *
-from src.routers.auth import get_db, authenticate_user, create_access_token, SECRET_KEY, ALGORITHM
+from src.routers.auth import get_db, authenticate_user, create_access_token, SECRET_KEY, ALGORITHM,get_current_user
 from jose import jwt
 from datetime import timedelta
+import pytest
 """                                                                                                                                                                                                  
 The line below is only needed for fastapi test
 The test test_authenticate_user does not need it                                                                                                                                                                                    
@@ -41,7 +43,13 @@ def test_create_access_token():
     assert decoded_token['id'] == user_id
     assert decoded_token['role'] == role
 
+# I need this annotation when testing async methods
+@pytest.mark.asyncio
 # I am testing an async function, so I need async (?)
-async def test_get_current_user():
-    print("TBC")
+async def test_get_current_user_valid_token():
+    encode = {'sub': 'testuser', 'id':1, 'role': 'admin'}
+    # keyword args can be in any order as long as the argument name is specified
+    token = jwt.encode(encode, key=SECRET_KEY, algorithm=ALGORITHM)
+    user = await get_current_user(token=token)
+    assert user == {'username': 'testuser', 'id': 1, 'user_role': 'admin'}
 
