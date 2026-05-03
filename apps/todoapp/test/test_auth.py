@@ -1,11 +1,15 @@
 from calendar import isleap
 from uu import encode
 
+from starlette import status
+
 from .utils import *
 from src.routers.auth import get_db, authenticate_user, create_access_token, SECRET_KEY, ALGORITHM,get_current_user
 from jose import jwt
 from datetime import timedelta
 import pytest
+
+from fastapi import HTTPException
 """                                                                                                                                                                                                  
 The line below is only needed for fastapi test
 The test test_authenticate_user does not need it                                                                                                                                                                                    
@@ -52,4 +56,22 @@ async def test_get_current_user_valid_token():
     token = jwt.encode(encode, key=SECRET_KEY, algorithm=ALGORITHM)
     user = await get_current_user(token=token)
     assert user == {'username': 'testuser', 'id': 1, 'user_role': 'admin'}
+
+@pytest.mark.asyncio
+# I am testing an async function, so I need async (?)
+async def test_get_current_user_missing_payload():
+    encode = {'role': 'user'}
+    token = jwt.encode(encode, key=SECRET_KEY, algorithm=ALGORITHM)
+
+    """
+    pytest.raises is a context manager that catches an expected exception.
+    It's saying: "run this code and expect it to raise an HTTPException".
+    If no exception is raised, the test fails. excInfo holds the caught exception so you can inspect it.
+    """
+    with pytest.raises(HTTPException) as excInfo:
+        await get_current_user(token=token)
+    assert excInfo.value.status_code == status.HTTP_401_UNAUTHORIZED
+    assert excInfo.value.detail == 'Could not validate user.'
+
+
 
