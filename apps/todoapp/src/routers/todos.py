@@ -12,7 +12,10 @@ from .auth import get_current_user
 from ..database import SessionLocal
 from ..models import Todos
 
-router = APIRouter()
+router = APIRouter(
+    prefix='/todos',
+    tags=['todos']
+)
 
 
 def get_db():
