@@ -9,6 +9,7 @@ alembic
 pytest
 httpx
 pytest-asyncio
+jinja2
 
 # How to Run
 #

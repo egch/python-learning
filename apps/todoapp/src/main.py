@@ -1,18 +1,23 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 
 from . import models
 from .database import engine
 from .routers import auth, todos, admin, users
-
-app = FastAPI()
-
+from fastapi.templating import Jinja2Templates
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     models.Base.metadata.create_all(bind=engine)
     yield
+
+app = FastAPI(lifespan=lifespan)
+templates = Jinja2Templates(directory="src/templates")
+
+@app.get("/")
+def home(request: Request):
+    return templates.TemplateResponse("home.html", {"request": request})
 
 @app.get("/healthy")
 def health_check():
