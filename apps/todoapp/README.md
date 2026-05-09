@@ -1,33 +1,47 @@
-# Todos 
+# Todos
 You need to have a pycharm project starting from this folder!
 
-## Commands
+## How to Run
 
-Create the venv env
+### 1. Create and activate the virtual environment
+
+**Mac/Linux**
 ```shell
 p3 -m pip install --upgrade pip
-p3 -m venv fastapienv 
-```
-
-Activate
-```shell
+p3 -m venv fastapienv
 source fastapienv/bin/activate
 ```
-Install the dependencies
+
+**Windows**
 ```shell
-pip install "fastapi[standard]"
-pip install passlib
-pip install bcrypt==4.0.1
-pip install python-multipart
-pip install "python-jose[cryptography]"
-pip install sqlalchemy
-pip install psycopg2-binary
+python3 -m pip install --upgrade pip
+python3 -m venv fastapienv
+fastapienv\Scripts\activate
 ```
 
-### fastapi commands
+### 2. Install dependencies from requirements.txt
+```shell
+pip install -r requirements.txt
+```
+
+### 3. Start PostgreSQL
+```shell
+cd docker-compose
+docker compose up -d
+```
+
+### 4. Start the app
 ```shell
 uvicorn src.main:app --reload
 ```
+
+The API will be available at http://127.0.0.1:8000
+Swagger UI (interactive docs) at http://127.0.0.1:8000/docs
+
+---
+
+## Commands
+
 
 ### Generate random secret
 ```shell
@@ -92,9 +106,11 @@ If the database data directory already exists (for example because of a mounted 
 Therefore, if you modify the initialization configuration, you must remove the existing volume or data directory.
 
 **Example (bind mount):**
-
+```shell
 rm -rf data  
 docker compose up
+```
+
 
 **Example (Docker volume):**
 
@@ -110,3 +126,67 @@ This forces PostgreSQL to initialize a **fresh database cluster with the new con
 
 ### Change Password
 Use this so you remember it: `12345!`
+
+## Alembic
+```shell
+alembic init alembic
+```
+
+Change the sql alchemy url in the [alembic.ini](alembic.ini) file:
+```properties
+sqlalchemy.url = 'postgresql://postgres:<pwd>@localhost/TodoApplicationDatabase'
+```
+
+Import your models and change some setting in [env.py](alembic/env.py).
+
+> **Note:**  Since models live under `src/`, use `from src import models` in `env.py` (not `import models`), and keep `prepend_sys_path = .` in `alembic.ini` so that `src` is resolvable as a package from the project root.
+
+### Create revision
+```shell
+alembic revision -m "Create phone number for user column"
+```
+Once the revision is created under the [versions](alembic/versions) folder we need to implement
+these two methods:
+```python
+def upgrade() -> None:
+    """Upgrade schema."""
+    pass
+  
+
+def downgrade() -> None:
+    """Downgrade schema."""
+    pass
+```
+
+Running upgrade. Revision ID is defined in the revision file under the [versions](alembic/versions) folder.
+```shell
+alembic upgrade <Revision-ID>
+```
+
+Running downgrade.
+```shell
+alembic downgrade -1
+```
+
+## Testing
+
+### Why `lifespan` instead of top-level `create_all`
+
+`models.Base.metadata.create_all(bind=engine)` at the top level of `main.py` runs at **import time**.
+This means the moment a test imports `app`, it tries to connect to PostgreSQL — even if the test uses SQLite.
+Moving it into the `lifespan` function ensures it only runs when the app actually starts, so tests can override the DB before any connection is made.
+
+## pytest
+```shell
+pytest
+```
+
+Disabling warnings
+```shell
+pytest --disable-warnings
+```
+
+ To see prints, run with the `-s `flag: 
+ ```shell
+pytest -s
+```

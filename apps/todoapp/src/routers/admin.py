@@ -1,17 +1,15 @@
 
 from typing import Annotated
 
-from fastapi import APIRouter
-from fastapi import HTTPException
-
+from fastapi import APIRouter, Path
 from fastapi import Depends
-
+from fastapi import HTTPException
+from fastapi import status
 from sqlalchemy.orm import Session
-from starlette import status
 
-from src.database import SessionLocal
-from src.models import Todos
-from .auth import  get_current_user
+from .auth import get_current_user
+from ..database import SessionLocal
+from ..models import Todos
 
 router = APIRouter()
 
@@ -40,4 +38,18 @@ async def read_all(user: user_dependency, db: db_dependency):
     return db.query(Todos).all()
 
 
+@router.delete("/todo/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_todo(user: user_dependency,
+                      db: db_dependency,
+                      todo_id: int = Path(gt=0)):
+    if user is None or user.get('user_role') != 'admin':
+        raise HTTPException(status_code=401, detail='Authentication Failed')
+
+    todo_model = (db.query(Todos).filter(Todos.id == todo_id)
+                  .filter(Todos.owner_id == user.get('id'))
+                  .first())
+    if todo_model is None:
+        raise HTTPException(status_code=404, detail='Todo not found')
+    db.query(Todos).filter(Todos.id == todo_id).delete()
+    db.commit()
 
