@@ -13,10 +13,11 @@ source fastapienv/bin/activate
 ```
 
 **Windows**
+Open a `PowerShell` prompt
 ```shell
 python3 -m pip install --upgrade pip
 python3 -m venv fastapienv
-fastapienv\Scripts\activate
+ .\fastapienv\Scripts\Activate.ps1
 ```
 
 ### 2. Install dependencies from requirements.txt
