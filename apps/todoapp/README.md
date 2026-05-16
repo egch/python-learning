@@ -191,3 +191,19 @@ pytest --disable-warnings
  ```shell
 pytest -s
 ```
+
+## HTML `defer` Attribute
+
+The `defer` attribute on a `<script>` tag tells the browser to download the script in the background without blocking HTML parsing, and execute it only after the page is fully parsed.
+
+```html
+<script src="{{ url_for('static', path='/js/base.js') }}" defer></script>
+```
+
+| Behavior | Without `defer` | With `defer` |
+|---|---|---|
+| Download | Blocks HTML parsing | Parallel with HTML parsing |
+| Execution | Immediately after download | After HTML is fully parsed |
+| DOM available | No | Yes |
+
+Use `defer` for scripts that interact with the DOM (e.g. button listeners, form handling), so the elements they reference are guaranteed to exist when the script runs.
